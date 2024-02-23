@@ -29,27 +29,27 @@ void main(void) {
         
         wait();
         //Byte 1    
-        PORTB = 0B000100001;
+        PORTB = 0B00100001;
         wait_()
                 
         wait();
         //Byte 2   
-        PORTB = 0B000000001;
+        PORTB = 0B00000001;
         wait_()
         
         wait();
         //Byte 3   
-        PORTB = 0B110100001;
+        PORTB = 0B11100001;
         wait_()
                 
         wait();
         //Byte 4   
-        PORTB = 0B000100101;
+        PORTB = 0B00100101;
         wait_()
 
         wait();
         //Byte 5   
-        PORTB = 0B110111001;
+        PORTB = 0B11111001;
         wait_()
                 
         wait();
@@ -68,7 +68,6 @@ void main(void) {
     return;
 }
 
-// Function to initialize ports
 void init(void) {
     // Configure RA5 as INPUT
     TRISA5 = 1;
