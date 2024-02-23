@@ -42,6 +42,8 @@ A + START + RT = Straight NTSC
 A + START + RT = Straight PAL
 Language Toggle: A + B + START (will detect current mode and switch)
 
+To do: Add IGR for SMS mode
+
 
   /*  =================================================================================  */
 // SMS Mode, required because of blocking code in megadrive polling. No worries to detect //
