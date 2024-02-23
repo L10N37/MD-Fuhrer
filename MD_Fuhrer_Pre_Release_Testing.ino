@@ -56,7 +56,7 @@ Language Toggle: A + B + START (will detect current mode and switch)
 // The code will detect a master system game on an adapter WITHOUT the combo.             //
 //                                                                                        //
 // For ED SMS games, first use C + START + DOWN before launching the game to enable pause //
-// SMS Pause = 
+// SMS Pause = A + B + DN for pause = 0xC7 for a few polls, uses a counter.
 // Any changes to region/ videomode for SMS games need to be done on a megadrive game     //
 // then saved with the reset combo, or done at the everdrive menu prior to launch         //
   /*  =================================================================================  */
@@ -70,7 +70,7 @@ LEFT =            0xBF
 RIGHT =           0x7F
 BTN1 =            0xEF
 BTN2 =            0xDF
-A + B + DN for pause = 0xC7 for a few polls, uses a counter.
+
 
 Pause is B11 line, this is cart slot 11th pin in front row from left to right, I used a via in front of the cart slot on top of the board for VA1 model 2. 
 The bottom is even easier, just count in 11th front row right to left (cos flipped). 
@@ -205,7 +205,7 @@ bitSet (smsCombo,1);
 Serial.println ("sms mode");
 Serial.println (smsCombo, HEX);
 
-    if (counter == 5)
+    if (counter == 2)
     {
       Serial.println ("PAUSE");
       SMS_PAUSE();
@@ -319,10 +319,10 @@ for (int i= 0; i < 7; i++) {
 
 // SMS PAUSE
 void SMS_PAUSE(){
-    bitWrite (DDRB, 5, 1);
-    bitWrite (PORTB, 5, 0);
+    bitWrite (DDRB, 5, 1);  // output
+    bitWrite (PORTB, 5, 0); // low
     delay (500);
-    bitWrite (DDRB, 5, 0);
+    bitWrite (DDRB, 5, 0);  // high-z
 }
 
 // 50 Hz mode
@@ -408,15 +408,18 @@ void JP_MODE(){
 
 void loop() {
 
+unsigned long selectHighTimer = 0; // Timer for SELECT_HIGH condition
 
-    if (SELECT_HIGH || smsMode) // SEL line does not toggle in SMS Mode
-    {
-      MASTER_SYSTEM();
-    }
-    else            // Megadrive / Genesis Game / controller mode
-    {
-      ComboCheck();
-    }
+
+selectHighTimer = millis(); // Record the current time
+        
+        if (millis() - (selectHighTimer >= 5 && SELECT_HIGH) || smsMode) {
+            MASTER_SYSTEM();
+        }
+        else 
+        {
+            ComboCheck();
+        }
 
 
   /* Send a high to the 5v mini relay to throw the reset switch */ 
