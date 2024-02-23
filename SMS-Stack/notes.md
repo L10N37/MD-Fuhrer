@@ -9,3 +9,4 @@ doing the 'swap' trick is nice
 
 
 There are mistakes on the main.c, but it compiles, and it works. It was late, I was tired.
+Update: I had a few soft resets during R-type gameplay and revised the code/ hex
